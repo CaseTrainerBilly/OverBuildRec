@@ -18,9 +18,9 @@ interface Job {
   id: string;
   title: string;
   company_id: string;
-  companies: {
+  companies?: {
     name: string;
-  };
+  } | null;
   location: string;
   job_type: string;
   salary_min: number;
@@ -37,14 +37,21 @@ export default function JobsPage() {
   const [searchLocation, setSearchLocation] = useState('');
   const [filterJobType, setFilterJobType] = useState('all');
   const [filterIndustry, setFilterIndustry] = useState('all');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const supabase = createClient(
-          process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-        );
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+        if (!supabaseUrl || !supabaseAnonKey) {
+          setErrorMessage('Supabase environment variables are missing.');
+          setLoading(false);
+          return;
+        }
+
+        const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
         const { data, error } = await supabase
           .from('jobs')
@@ -53,10 +60,17 @@ export default function JobsPage() {
           .order('created_at', { ascending: false });
 
         if (error) throw error;
-        setJobs(data || []);
-        setFilteredJobs(data || []);
+
+        const safeJobs = (data || []).map((job) => ({
+          ...job,
+          companies: job.companies ?? { name: 'Unknown Company' },
+        }));
+
+        setJobs(safeJobs);
+        setFilteredJobs(safeJobs);
       } catch (error) {
         console.error('Error fetching jobs:', error);
+        setErrorMessage('Failed to load jobs.');
       } finally {
         setLoading(false);
       }
@@ -69,11 +83,13 @@ export default function JobsPage() {
     let filtered = jobs;
 
     if (searchKeyword) {
-      filtered = filtered.filter(
-        (job) =>
+      filtered = filtered.filter((job) => {
+        const companyName = job.companies?.name || '';
+        return (
           job.title.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-          job.companies.name.toLowerCase().includes(searchKeyword.toLowerCase())
-      );
+          companyName.toLowerCase().includes(searchKeyword.toLowerCase())
+        );
+      });
     }
 
     if (searchLocation) {
@@ -182,6 +198,10 @@ export default function JobsPage() {
 
         {loading ? (
           <div className="py-12 text-center">Loading jobs...</div>
+        ) : errorMessage ? (
+          <div className="py-12 text-center">
+            <p className="text-destructive">{errorMessage}</p>
+          </div>
         ) : filteredJobs.length === 0 ? (
           <div className="py-12 text-center">
             <p className="text-muted-foreground">
@@ -199,7 +219,7 @@ export default function JobsPage() {
                   key={job.id}
                   id={job.id}
                   title={job.title}
-                  company={job.companies.name}
+                  company={job.companies?.name || 'Unknown Company'}
                   location={job.location}
                   jobType={job.job_type}
                   salaryMin={job.salary_min}
