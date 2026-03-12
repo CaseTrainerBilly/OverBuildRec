@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Search, Filter } from 'lucide-react';
+import { Search } from 'lucide-react';
 
 interface Job {
   id: string;
@@ -35,8 +35,8 @@ export default function JobsPage() {
   const [loading, setLoading] = useState(true);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchLocation, setSearchLocation] = useState('');
-  const [filterJobType, setFilterJobType] = useState('');
-  const [filterIndustry, setFilterIndustry] = useState('');
+  const [filterJobType, setFilterJobType] = useState('all');
+  const [filterIndustry, setFilterIndustry] = useState('all');
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -82,11 +82,11 @@ export default function JobsPage() {
       );
     }
 
-    if (filterJobType) {
+    if (filterJobType !== 'all') {
       filtered = filtered.filter((job) => job.job_type === filterJobType);
     }
 
-    if (filterIndustry) {
+    if (filterIndustry !== 'all') {
       filtered = filtered.filter((job) => job.industry === filterIndustry);
     }
 
@@ -139,7 +139,7 @@ export default function JobsPage() {
                   <SelectValue placeholder="All job types" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All job types</SelectItem>
+                  <SelectItem value="all">All job types</SelectItem>
                   <SelectItem value="Full-time">Full-time</SelectItem>
                   <SelectItem value="Part-time">Part-time</SelectItem>
                   <SelectItem value="Contract">Contract</SelectItem>
@@ -153,7 +153,7 @@ export default function JobsPage() {
                   <SelectValue placeholder="All industries" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All industries</SelectItem>
+                  <SelectItem value="all">All industries</SelectItem>
                   <SelectItem value="Construction">Construction</SelectItem>
                   <SelectItem value="Engineering">Engineering</SelectItem>
                   <SelectItem value="Infrastructure">Infrastructure</SelectItem>
@@ -162,14 +162,17 @@ export default function JobsPage() {
             </div>
           </div>
 
-          {(searchKeyword || searchLocation || filterJobType || filterIndustry) && (
+          {(searchKeyword ||
+            searchLocation ||
+            filterJobType !== 'all' ||
+            filterIndustry !== 'all') && (
             <Button
               variant="outline"
               onClick={() => {
                 setSearchKeyword('');
                 setSearchLocation('');
-                setFilterJobType('');
-                setFilterIndustry('');
+                setFilterJobType('all');
+                setFilterIndustry('all');
               }}
             >
               Clear Filters
@@ -178,9 +181,9 @@ export default function JobsPage() {
         </div>
 
         {loading ? (
-          <div className="text-center py-12">Loading jobs...</div>
+          <div className="py-12 text-center">Loading jobs...</div>
         ) : filteredJobs.length === 0 ? (
-          <div className="text-center py-12">
+          <div className="py-12 text-center">
             <p className="text-muted-foreground">
               No jobs found matching your criteria.
             </p>
