@@ -68,7 +68,7 @@ export default function AboutPage() {
               transform careers and drive business growth.
             </p>
             <p className="mt-4 text-lg text-muted-foreground">
-              With over 15 years of experience in the industry, we've developed deep
+              With over 15 years of experience in the industry, we&apos;ve developed deep
               expertise and relationships that enable us to consistently deliver
               exceptional results. Our team understands the unique challenges of
               recruiting in these sectors and approaches every placement with
@@ -169,7 +169,7 @@ export default function AboutPage() {
                 <h3 className="font-bold">Strong Industry Relationships</h3>
                 <p className="text-muted-foreground">
                   Our network of companies, contractors, and professionals gives us
-                  access to opportunities beyond what's advertised.
+                  access to opportunities beyond what&apos;s advertised.
                 </p>
               </div>
             </div>
@@ -193,7 +193,7 @@ export default function AboutPage() {
                 <h3 className="font-bold">Proven Track Record</h3>
                 <p className="text-muted-foreground">
                   With thousands of successful placements and a 98% client
-                  satisfaction rate, we've earned our reputation.
+                  satisfaction rate, we&apos;ve earned our reputation.
                 </p>
               </div>
             </div>

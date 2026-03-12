@@ -41,7 +41,7 @@ export default function EmployersPage() {
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold">For Employers</h1>
           <p className="mt-2 text-muted-foreground">
-            Build your team with OVERBUILD's specialist recruitment services
+            Build your team with OVERBUILD we are a specialist recruitment services
           </p>
         </div>
       </section>

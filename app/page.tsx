@@ -61,7 +61,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="text-5xl font-bold leading-tight sm:text-6xl md:text-7xl">
-              Building the Workforce Behind Tomorrow's{' '}
+              Building the Workforce Behind Tomorrows{' '}
               <span className="text-primary">Infrastructure</span>
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-xl text-muted-foreground">

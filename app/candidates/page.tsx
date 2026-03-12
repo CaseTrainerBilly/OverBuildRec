@@ -162,7 +162,7 @@ export default function CandidatesPage() {
             <div>
               <h3 className="text-xl font-bold">Personalized Support</h3>
               <p className="mt-2 text-muted-foreground">
-                We don't just match you with jobs - we support you through the entire
+                We Don&apos;t just match you with jobs - we support you through the entire
                 application and interview process.
               </p>
             </div>
@@ -176,7 +176,7 @@ export default function CandidatesPage() {
             <div>
               <h3 className="text-xl font-bold">Career Development</h3>
               <p className="mt-2 text-muted-foreground">
-                We're not just about finding your next job - we help you build a
+                We&apos;re not just about finding your next job - we help you build a
                 lasting career in your chosen field.
               </p>
             </div>

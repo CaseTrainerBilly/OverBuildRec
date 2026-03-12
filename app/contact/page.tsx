@@ -73,7 +73,7 @@ export default function ContactPage() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {submitted && (
                 <div className="rounded-lg bg-green-50 p-4 text-green-700 dark:bg-green-950 dark:text-green-200">
-                  Thank you for your message. We'll get back to you soon!
+                  Thank you for your message. We will get back to you soon!
                 </div>
               )}
               {error && (
