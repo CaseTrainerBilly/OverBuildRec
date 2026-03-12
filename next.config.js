@@ -1,9 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
+  output: "export",
+  basePath: "/OverBuildRec",
+  assetPrefix: "/OverBuildRec/",
+  images: {
+    unoptimized: true,
   },
-  images: { unoptimized: true },
 };
 
 module.exports = nextConfig;
